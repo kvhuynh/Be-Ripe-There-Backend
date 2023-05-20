@@ -1,4 +1,4 @@
-package com.kvhuynh.server.config;
+package com.kvhuynh.server.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

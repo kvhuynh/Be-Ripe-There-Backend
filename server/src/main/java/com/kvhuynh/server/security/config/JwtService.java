@@ -1,4 +1,4 @@
-package com.kvhuynh.server.config;
+package com.kvhuynh.server.security.config;
 
 import java.security.Key;
 import java.util.Date;
@@ -34,6 +34,7 @@ public class JwtService {
   }
 
   public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+
 
     final Claims claims = extractAllClaims(token);
     return claimsResolver.apply(claims);
@@ -88,7 +89,7 @@ public class JwtService {
   }
 
   private Claims extractAllClaims(String token) {
-
+    System.out.println("ERXTRACT ALL CLAIMS");
     return Jwts
         .parserBuilder()
         .setSigningKey(getSignInKey())
@@ -98,7 +99,7 @@ public class JwtService {
   }
 
   private Key getSignInKey() {
-
+    
     byte[] keyBytes = Decoders.BASE64.decode(secretKey);
     return Keys.hmacShaKeyFor(keyBytes);
   }

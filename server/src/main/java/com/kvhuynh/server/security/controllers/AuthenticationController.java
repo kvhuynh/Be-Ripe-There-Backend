@@ -1,17 +1,19 @@
-package com.kvhuynh.server.controllers.auth;
+package com.kvhuynh.server.security.controllers;
 
 import java.io.IOException;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kvhuynh.server.models.auth.AuthenticationRequest;
-import com.kvhuynh.server.models.auth.AuthenticationResponse;
-import com.kvhuynh.server.models.auth.RegisterRequest;
-import com.kvhuynh.server.services.auth.AuthenticationService;
+import com.kvhuynh.server.security.models.AuthenticationRequest;
+import com.kvhuynh.server.security.models.AuthenticationResponse;
+import com.kvhuynh.server.security.models.RegisterRequest;
+import com.kvhuynh.server.security.services.AuthenticationService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,16 +27,21 @@ public class AuthenticationController {
     private final AuthenticationService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request, BindingResult result) {
 
-        System.out.println("from register");
-        return ResponseEntity.ok(authService.register(request));
+        AuthenticationResponse test = authService.register(request, result);
+        if (result.hasErrors()) {
+            AuthenticationResponse error = authService.generateError(result);
+            return ResponseEntity.ok(error);
+        }
+        System.out.println("User has successfully registered");
+        return ResponseEntity.ok(test);
 
     }
 
-    @PostMapping("/authenticate")
+    @GetMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-
+        System.out.println("User has been successfully authenticated");
         return ResponseEntity.ok(authService.authenticate(request));
     }
 

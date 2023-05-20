@@ -1,4 +1,13 @@
-package com.kvhuynh.server.models.enums;
+package com.kvhuynh.server.security.models.enums;
+
+import static com.kvhuynh.server.security.models.enums.Permission.ADMIN_CREATE;
+import static com.kvhuynh.server.security.models.enums.Permission.ADMIN_DELETE;
+import static com.kvhuynh.server.security.models.enums.Permission.ADMIN_READ;
+import static com.kvhuynh.server.security.models.enums.Permission.ADMIN_UPDATE;
+import static com.kvhuynh.server.security.models.enums.Permission.MANAGER_CREATE;
+import static com.kvhuynh.server.security.models.enums.Permission.MANAGER_DELETE;
+import static com.kvhuynh.server.security.models.enums.Permission.MANAGER_READ;
+import static com.kvhuynh.server.security.models.enums.Permission.MANAGER_UPDATE;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,14 +18,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import static com.kvhuynh.server.models.enums.Permission.ADMIN_CREATE;
-import static com.kvhuynh.server.models.enums.Permission.ADMIN_DELETE;
-import static com.kvhuynh.server.models.enums.Permission.ADMIN_READ;
-import static com.kvhuynh.server.models.enums.Permission.ADMIN_UPDATE;
-import static com.kvhuynh.server.models.enums.Permission.MANAGER_CREATE;
-import static com.kvhuynh.server.models.enums.Permission.MANAGER_DELETE;
-import static com.kvhuynh.server.models.enums.Permission.MANAGER_READ;
-import static com.kvhuynh.server.models.enums.Permission.MANAGER_UPDATE;
 
 @RequiredArgsConstructor
 public enum Role {

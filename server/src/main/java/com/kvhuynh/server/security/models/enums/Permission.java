@@ -1,4 +1,4 @@
-package com.kvhuynh.server.models.enums;
+package com.kvhuynh.server.security.models.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

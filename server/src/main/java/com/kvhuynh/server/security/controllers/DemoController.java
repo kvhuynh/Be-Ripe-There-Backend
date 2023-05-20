@@ -1,4 +1,4 @@
-package com.kvhuynh.server.controllers.auth;
+package com.kvhuynh.server.security.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +11,7 @@ public class DemoController {
     
     @GetMapping()
     public ResponseEntity<String> sayHello() {
+        System.out.println("why is this ok");
         return ResponseEntity.ok("Hello from secured endpoint");
     }
 }

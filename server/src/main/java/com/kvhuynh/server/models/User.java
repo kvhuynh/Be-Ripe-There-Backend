@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.kvhuynh.server.models.enums.Role;
+import com.kvhuynh.server.security.models.enums.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,7 +46,6 @@ public class User implements UserDetails{
 	@NotEmpty(message="Last Name is required!")
     @Size(min=3, max=30, message="name must be between 3 and 30 characters")
     private String lastName;
-    
     
     @NotEmpty(message="Email is required!")
     @Email(message="Please enter a valid email!")

@@ -1,4 +1,4 @@
-package com.kvhuynh.server.services.auth;
+package com.kvhuynh.server.security.services;
 
 import java.io.IOException;
 
@@ -7,17 +7,18 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kvhuynh.server.config.JwtService;
 import com.kvhuynh.server.models.User;
-import com.kvhuynh.server.models.auth.AuthenticationRequest;
-import com.kvhuynh.server.models.auth.AuthenticationResponse;
-import com.kvhuynh.server.models.auth.RegisterRequest;
-import com.kvhuynh.server.models.auth.Token;
-import com.kvhuynh.server.models.enums.TokenType;
-import com.kvhuynh.server.repositories.TokenRepository;
 import com.kvhuynh.server.repositories.UserRepository;
+import com.kvhuynh.server.security.config.JwtService;
+import com.kvhuynh.server.security.models.AuthenticationRequest;
+import com.kvhuynh.server.security.models.AuthenticationResponse;
+import com.kvhuynh.server.security.models.RegisterRequest;
+import com.kvhuynh.server.security.models.Token;
+import com.kvhuynh.server.security.models.enums.TokenType;
+import com.kvhuynh.server.security.repositories.TokenRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,13 +33,18 @@ public class AuthenticationService {
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
+  // private final ApiError apiError;
   
 
-  public AuthenticationResponse register(RegisterRequest request) {
+  public AuthenticationResponse register(RegisterRequest request, BindingResult result) {
 
-    // if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-    //   throw 
-    // }
+    if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+			result.rejectValue("email", "Unique", "Email is already in use.");
+		}
+
+    if (result.hasErrors()) {
+      return null;
+    }
 
     var user = User.builder()
         .firstName(request.getFirstName())
@@ -137,5 +143,9 @@ public class AuthenticationService {
         new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
       }
     }
+  }
+
+  public AuthenticationResponse generateError(BindingResult result) {
+    return AuthenticationResponse.builder().error(result.toString()).build();
   }
 }

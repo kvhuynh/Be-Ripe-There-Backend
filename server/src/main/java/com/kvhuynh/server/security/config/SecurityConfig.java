@@ -1,17 +1,15 @@
-package com.kvhuynh.server.config;
+package com.kvhuynh.server.security.config;
 
-import static com.kvhuynh.server.models.enums.Role.MANAGER;
-
-import static com.kvhuynh.server.models.enums.Role.ADMIN;
-import static com.kvhuynh.server.models.enums.Permission.ADMIN_CREATE;
-import static com.kvhuynh.server.models.enums.Permission.ADMIN_DELETE;
-import static com.kvhuynh.server.models.enums.Permission.ADMIN_READ;
-import static com.kvhuynh.server.models.enums.Permission.ADMIN_UPDATE;
-import static com.kvhuynh.server.models.enums.Permission.MANAGER_CREATE;
-import static com.kvhuynh.server.models.enums.Permission.MANAGER_DELETE;
-import static com.kvhuynh.server.models.enums.Permission.MANAGER_READ;
-import static com.kvhuynh.server.models.enums.Permission.MANAGER_UPDATE;
-
+import static com.kvhuynh.server.security.models.enums.Permission.ADMIN_CREATE;
+import static com.kvhuynh.server.security.models.enums.Permission.ADMIN_DELETE;
+import static com.kvhuynh.server.security.models.enums.Permission.ADMIN_READ;
+import static com.kvhuynh.server.security.models.enums.Permission.ADMIN_UPDATE;
+import static com.kvhuynh.server.security.models.enums.Permission.MANAGER_CREATE;
+import static com.kvhuynh.server.security.models.enums.Permission.MANAGER_DELETE;
+import static com.kvhuynh.server.security.models.enums.Permission.MANAGER_READ;
+import static com.kvhuynh.server.security.models.enums.Permission.MANAGER_UPDATE;
+import static com.kvhuynh.server.security.models.enums.Role.ADMIN;
+import static com.kvhuynh.server.security.models.enums.Role.MANAGER;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -33,7 +31,8 @@ import lombok.RequiredArgsConstructor;
 
 
 @Configuration
-@EnableWebSecurity(debug=true)
+// @EnableWebSecurity(debug=true)
+@EnableWebSecurity
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfig {
@@ -49,28 +48,28 @@ public class SecurityConfig {
         .disable()
         .authorizeHttpRequests()
         .requestMatchers(
-                "/api/v1/auth/**",
-                "/v2/api-docs",
-                "/v3/api-docs",
-                "/v3/api-docs/**",
-                "/swagger-resources",
-                "/swagger-resources/**",
-                "/configuration/ui",
-                "/configuration/security",
-                "/swagger-ui/**",
-                "/webjars/**",
-                "/swagger-ui.html"
+                "/api/v1/auth/**"
+                // "/v2/api-docs",
+                // "/v3/api-docs",
+                // "/v3/api-docs/**",
+                // "/swagger-resources",
+                // "/swagger-resources/**",
+                // "/configuration/ui",
+                // "/configuration/security",
+                // "/swagger-ui/**",
+                // "/webjars/**",
+                // "/swagger-ui.html"
         )
           .permitAll()
 
 
-        .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
+        // .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
 
 
-        .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
-        .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
-        .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
-        .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
+        // .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
+        // .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
+        // .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
+        // .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
 
 
        /* .requestMatchers("/api/v1/admin/**").hasRole(ADMIN.name())

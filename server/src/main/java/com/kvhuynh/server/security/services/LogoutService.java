@@ -1,11 +1,11 @@
-package com.kvhuynh.server.services.auth;
+package com.kvhuynh.server.security.services;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 
-import com.kvhuynh.server.repositories.TokenRepository;
+import com.kvhuynh.server.security.repositories.TokenRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

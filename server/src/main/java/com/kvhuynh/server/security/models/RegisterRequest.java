@@ -1,6 +1,6 @@
-package com.kvhuynh.server.models.auth;
+package com.kvhuynh.server.security.models;
 
-import com.kvhuynh.server.models.enums.Role;
+import com.kvhuynh.server.security.models.enums.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

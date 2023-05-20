@@ -1,4 +1,4 @@
-package com.kvhuynh.server.models.auth;
+package com.kvhuynh.server.security.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,5 +18,8 @@ public class AuthenticationResponse {
   
   @JsonProperty("refresh_token")
   private String refreshToken;
+
+  @JsonProperty("error")
+  private String error;
 }
 

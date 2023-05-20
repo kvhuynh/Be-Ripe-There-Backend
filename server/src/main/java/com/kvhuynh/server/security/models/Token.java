@@ -1,7 +1,7 @@
-package com.kvhuynh.server.models.auth;
+package com.kvhuynh.server.security.models;
 
 import com.kvhuynh.server.models.User;
-import com.kvhuynh.server.models.enums.TokenType;
+import com.kvhuynh.server.security.models.enums.TokenType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
