@@ -35,7 +35,6 @@ public class AuthenticationService {
   private final AuthenticationManager authenticationManager;
   // private final ApiError apiError;
   
-
   public AuthenticationResponse register(RegisterRequest request, BindingResult result) {
 
     if (userRepository.findByEmail(request.getEmail()).isPresent()) {

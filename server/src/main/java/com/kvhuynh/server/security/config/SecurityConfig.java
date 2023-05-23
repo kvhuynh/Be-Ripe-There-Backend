@@ -49,6 +49,7 @@ public class SecurityConfig {
         .authorizeHttpRequests()
         .requestMatchers(
                 "/api/v1/auth/**"
+                // "/api/v1/recipes/**"
                 // "/v2/api-docs",
                 // "/v3/api-docs",
                 // "/v3/api-docs/**",
@@ -85,6 +86,8 @@ public class SecurityConfig {
         .and()
           .sessionManagement()
           .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+          // .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+
         .and()
         .authenticationProvider(authenticationProvider)
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
