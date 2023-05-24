@@ -40,5 +40,7 @@ public class LogoutService implements LogoutHandler {
       tokenRepository.save(storedToken);
       SecurityContextHolder.clearContext();
     }
+
+    System.out.println("from logout service");
   }
 }

@@ -10,6 +10,6 @@ public class AuthenticationControllerTest {
 
     @Test
     void registerTest() {
-        AuthenticationController controller = new AuthenticationController(authenticationService);
+        AuthenticationController controller = new AuthenticationController(authenticationService, null);
     }
 }

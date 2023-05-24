@@ -1,5 +1,7 @@
 package com.kvhuynh.server.models.recipes;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +31,9 @@ public class Ingredient {
 
     private String ingredientQuanitity;
 
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
+    @JsonBackReference
     private Recipe recipe;
 }

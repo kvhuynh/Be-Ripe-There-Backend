@@ -22,20 +22,25 @@ import com.kvhuynh.server.security.repositories.TokenRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+
   private final UserRepository userRepository;
+
   private final TokenRepository tokenRepository;
+
   private final PasswordEncoder passwordEncoder;
+
   private final JwtService jwtService;
+
   private final AuthenticationManager authenticationManager;
-  // private final ApiError apiError;
-  
-  public AuthenticationResponse register(RegisterRequest request, BindingResult result) {
+
+  public AuthenticationResponse register(RegisterRequest request, BindingResult result, HttpSession session) {
 
     if (userRepository.findByEmail(request.getEmail()).isPresent()) {
 			result.rejectValue("email", "Unique", "Email is already in use.");
@@ -56,13 +61,14 @@ public class AuthenticationService {
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);
+    session.setAttribute("uuid", savedUser.getId());
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)
             .refreshToken(refreshToken)
         .build();
   }
 
-  public AuthenticationResponse authenticate(AuthenticationRequest request) {
+  public AuthenticationResponse authenticate(AuthenticationRequest request, HttpSession session) {
 
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
@@ -73,10 +79,11 @@ public class AuthenticationService {
 
     var user = userRepository.findByEmail(request.getEmail())
         .orElseThrow();
-    var jwtToken = jwtService.generateToken(user);
-    var refreshToken = jwtService.generateRefreshToken(user);
-    revokeAllUserTokens(user);
-    saveUserToken(user, jwtToken);
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwtToken);
+        session.setAttribute("uuid", user.getId());
 
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)
