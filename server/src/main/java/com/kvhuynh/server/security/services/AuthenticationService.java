@@ -19,6 +19,7 @@ import com.kvhuynh.server.security.models.RegisterRequest;
 import com.kvhuynh.server.security.models.Token;
 import com.kvhuynh.server.security.models.enums.TokenType;
 import com.kvhuynh.server.security.repositories.TokenRepository;
+import com.kvhuynh.server.services.CalendarService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,6 +30,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+
+  private final CalendarService calendarService;
 
   private final UserRepository userRepository;
 
@@ -58,6 +61,7 @@ public class AuthenticationService {
         .role(request.getRole())
         .build();
     var savedUser = userRepository.save(user);
+    calendarService.createCalendar(savedUser);
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);

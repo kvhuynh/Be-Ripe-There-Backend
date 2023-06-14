@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.kvhuynh.server.models.User;
 import com.kvhuynh.server.models.recipes.Ingredient;
 import com.kvhuynh.server.models.recipes.Recipe;
 import com.kvhuynh.server.repositories.recipes.IngredientRepository;
 import com.kvhuynh.server.repositories.recipes.RecipeRepository;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -32,7 +32,7 @@ public class RecipeService {
 
     }
 
-    public void processIngredient(Recipe recipe, HttpSession session) {
+    public void processIngredient(Recipe recipe) {
         for (int i = 0; i < recipe.getIngredients().size(); i++) {
             Ingredient ingredient = new Ingredient();
             ingredient.setIngredientName(recipe.getIngredients().get(i).getIngredientName());
@@ -43,15 +43,40 @@ public class RecipeService {
         }
     }
 
-	public List<Recipe> getAllRecipes(HttpSession session) {
-        // System.out.println("here");
+	public List<Recipe> getAllRecipes() {
+
 		return recipeRepository.findAll();
-        // System.out.println(recipeRepository.findAll());
-        // return null;
 	}
 
-    public Optional<Recipe> getOneRecipeById(Long id, HttpSession session) {
-        return recipeRepository.findById(id);
+    public Recipe getOneRecipeById(Long id) {
+
+        return recipeRepository.findById(id).get();
+    }
+
+    public void toggleFavoriteRecipe(Recipe recipe, User user) {
+        boolean isFavorited = recipe.getUsers().contains(user);
+        System.out.println(isFavorited);
+        List<User> favoritedUsers = recipe.getUsers();
+        // System.out.println(favoritedUsers);
+        // System.out.println(user);
+        System.out.println("we are in toggle favorite recipe from service");
+        if (isFavorited) {
+            System.out.println("we are removing a favorite to this user before");
+            favoritedUsers.remove(user);
+            System.out.println("we are removing a favorite to this user after");
+
+        } else {
+            System.out.println("we are adding a favorite to this user before");
+            favoritedUsers.add(user);
+            System.out.println("we are adding a favorite to this user after");
+        }
+        
+        recipeRepository.save(recipe);
+
+    }
+
+    public List<Recipe> getFavorites(Long id) {
+        return null;
     }
 
 }

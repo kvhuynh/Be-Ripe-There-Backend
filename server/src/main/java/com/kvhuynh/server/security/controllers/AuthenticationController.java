@@ -16,6 +16,7 @@ import com.kvhuynh.server.security.models.AuthenticationResponse;
 import com.kvhuynh.server.security.models.RegisterRequest;
 import com.kvhuynh.server.security.services.AuthenticationService;
 import com.kvhuynh.server.security.services.LogoutService;
+import com.kvhuynh.server.services.CalendarService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,10 +33,13 @@ public class AuthenticationController {
 
     private final LogoutService logoutService;
 
+    private final CalendarService calendarService;
+
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request, BindingResult result, HttpSession session) {
 
         AuthenticationResponse test = authService.register(request, result, session);
+        
         if (result.hasErrors()) {
             AuthenticationResponse error = authService.generateError(result);
             return ResponseEntity.ok(error);
@@ -43,7 +47,8 @@ public class AuthenticationController {
         System.out.println(session.getAttribute("uuid"));
 
         System.out.println("User has successfully registered");
-        return ResponseEntity.ok(test);
+        // return ResponseEntity.ok(test);
+        return null;
 
     }
 

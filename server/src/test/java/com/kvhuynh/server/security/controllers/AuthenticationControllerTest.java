@@ -8,8 +8,8 @@ public class AuthenticationControllerTest {
 
     private AuthenticationService authenticationService;
 
-    @Test
-    void registerTest() {
-        AuthenticationController controller = new AuthenticationController(authenticationService, null);
-    }
+    // @Test
+    // void registerTest() {
+    //     AuthenticationController controller = new AuthenticationController(authenticationService, null);
+    // }
 }

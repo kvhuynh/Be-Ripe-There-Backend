@@ -9,8 +9,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.kvhuynh.server.models.recipes.Recipe;
 import com.kvhuynh.server.security.models.enums.Role;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -75,17 +77,17 @@ public class User implements UserDetails{
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="meal_calendar_id")
 	private MealCalendar mealCalendar;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
 		name = "users_favorite_recipes",
 		joinColumns = @JoinColumn(name = "user_id"),
 		inverseJoinColumns = @JoinColumn(name = "recipe_id")
 	)
-	private List<User> users;
+	private List<Recipe> recipes;
 
 
 	@PrePersist
